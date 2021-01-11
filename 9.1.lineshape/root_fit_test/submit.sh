@@ -1,0 +1,1 @@
+root fitomegapipi_v1.c | tee log.txt

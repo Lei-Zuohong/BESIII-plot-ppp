@@ -7,7 +7,6 @@ import headpy.hfile as hfile
 # BaBar的1-3GeV的pi+pi-pi0截面
 ################################################################################
 output = []
-# region part1
 output.append([1.0625, 1.61, 0.53])
 output.append([1.0875, 3.68, 0.61])
 output.append([1.1125, 4.35, 0.63])
@@ -47,8 +46,6 @@ output.append([1.9375, 0.83, 0.21])
 output.append([1.9625, 0.64, 0.19])
 output.append([1.9875, 0.30, 0.16])
 output.append([2.0125, 0.60, 0.18])
-# endregion
-# region part2
 output.append([2.0375, 0.41, 0.17])
 output.append([2.0625, 0.43, 0.15])
 output.append([2.0875, 0.61, 0.17])
@@ -88,7 +85,6 @@ output.append([2.9125, 0.08, 0.07])
 output.append([2.9375, 0.26, 0.09])
 output.append([2.9625, -0.01, 0.06])
 output.append([2.9875, 0.20, 0.08])
-# endregion
 # print
 output = numpy.array(output)
 output = output.T
