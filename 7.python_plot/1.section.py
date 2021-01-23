@@ -12,37 +12,58 @@ filename = {}
 filename['eff'] = '%s.pkl' % (massages['efficiency'])
 filename['factor'] = '%s.pkl' % (massages['factor'])
 filename['event'] = '%s.pkl' % (massages['nevent'])
+filename['sta_fraction_rho770pi'] = 'fdata_error/1.sta_fraction_rho770pi.pkl'
+filename['sta_fraction_rho1450pi'] = 'fdata_error/1.sta_fraction_rho1450pi.pkl'
+filename['sta_fraction_omega782pi'] = 'fdata_error/1.sta_fraction_omega782pi.pkl'
+filename['sta_efficiency'] = 'fdata_error/1.sta_efficiency.pkl'
 data = {}
 for i in filename:
     data[i] = hfile.pkl_read(filename[i])
 # 计算文件
 energy_list = hppp.energy_list()
 energy_sort = hppp.energy_sort()
-nsignal = {}
-for i in energy_sort:
-    nsignal[i] = {}
-    nsignal[i]['Energy'] = i
-    nsignal[i]['Nsignal'] = data['event'][i]['nevent']
-    nsignal[i]['eNsignal'] = data['event'][i]['enevent']
-    nsignal[i]['Effect'] = data['eff'][i]
-    nsignal[i]['eEffect'] = 0
-    nsignal[i]['Lumin'] = energy_list[i][2]
-    nsignal[i]['isr'] = data['factor'][i]['isr']
-    nsignal[i]['vpf'] = data['factor'][i]['vpf']
+output = {}
+for energy in energy_sort:
+    # 录入数据
+    output[energy] = {}
 
-    a = nsignal[i]['Nsignal']
-    ea = nsignal[i]['eNsignal']
-    b = nsignal[i]['Effect']
-    c = nsignal[i]['Lumin']
-    isr = nsignal[i]['isr']
-    v = nsignal[i]['vpf']
-    br2 = hconst.pdg()['br_pi0']
+    output[energy]['Energy'] = energy
 
-    nsignal[i]['Section'] = a / b / c / isr / v / br2
-    nsignal[i]['eSection'] = ea / b / c / isr / v / br2
-for i in energy_sort:
-    print('|{:^20}|{:^20}|{:^20}|'.format('%1.4f' % (i),
-                                          '%.4f' % (nsignal[i]['Section']),
-                                          '%.4f' % (nsignal[i]['eSection'])))
+    output[energy]['Nsignal'] = data['event'][energy]['nevent']
+    output[energy]['eNsignal'] = data['event'][energy]['enevent']
+
+    output[energy]['Lumin'] = energy_list[energy][2]
+
+    output[energy]['Effciency'] = data['eff'][energy]
+
+    output[energy]['isr'] = data['factor'][energy]['isr']
+    output[energy]['vpf'] = data['factor'][energy]['vpf']
+
+    output[energy]['Branch'] = 0.98823
+    # 录入误差
+    error = {}
+    error['efficiency'] = data['sta_efficiency'][energy]
+    error['nsignal'] = data['event'][energy]['enevent'] / data['event'][energy]['nevent']
+    error_total = 0
+    for i in error:
+        error_total += error[i]**2
+    error_total = pow(error_total, 0.5)
+    # 计算数据
+    section = output[energy]['Nsignal'] / output[energy]['Lumin'] / output[energy]['Effciency'] / output[energy]['isr'] / output[energy]['vpf'] / output[energy]['Branch']
+    esection = section * error_total
+
+    output[energy]['Section'] = section
+    output[energy]['eSection'] = esection
+    output[energy]['error_efficiency'] = error['efficiency']
+    output[energy]['error_nsignal'] = error['nsignal']
+    output[energy]['error_total'] = error_total
+
+for energy in energy_sort:
+    print('|{:^10}|{:^18}|{:^18}|{:^18}|{:^18}|{:^18}|'.format('%1.4f' % (energy),
+                                                               '%.4f' % (output[energy]['Section']),
+                                                               '%.4f' % (output[energy]['eSection']),
+                                                               '%.4f' % (output[energy]['error_efficiency']),
+                                                               '%.4f' % (output[energy]['error_nsignal']),
+                                                               '%.4f' % (output[energy]['error_total'])))
 fileoutput = '%s.pkl' % (massages['section'])
-hfile.pkl_dump(fileoutput, nsignal)
+hfile.pkl_dump(fileoutput, output)

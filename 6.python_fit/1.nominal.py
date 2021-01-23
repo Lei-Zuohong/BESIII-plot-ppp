@@ -38,7 +38,7 @@ for energy in hppp.energy_sort():
     # 设定fit参数
     argv['spread_times'] = 100
     argv['func_fit'] = hfit.dofit
-    myfit.path_temp = '/besfs/users/leizh/ftemp/fitplot'
+    myfit.path_temp = '/besfs5/users/leizh/ftemp/fitplot'
     myfit.script = '6.python_fit/script/normal.py'
     # 输入参数拟合
     myfit.do_dump(default.dump, **argv)

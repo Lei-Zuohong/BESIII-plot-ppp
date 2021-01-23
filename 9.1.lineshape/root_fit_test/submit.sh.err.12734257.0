@@ -1,4 +1,0 @@
-Error in <TGClient::TGClient>: can't open display "localhost:11.0", switching to batch mode...
- In case you run from a remote ssh session, reconnect with ssh -Y
-Error: Too many initializers, exceeded length of array for 'func_best_start' fitomegapipi_v1.c:250:
-*** Interpreter error recovered ***

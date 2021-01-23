@@ -10,19 +10,66 @@ import default as default
 import headpy.hbes.hfunc as hfunc
 
 
+data_bes_pppmpz = default.data_bes_pppmpz()
+data_babar = default.data_babar_pppmpz()
 data_snd = default.data_snd_pppmpz()
+data_beslow = default.data_beslow_pppmpz()
+
+data_use = data_bes_pppmpz
+
 x = numpy.linspace(0.1, 3, 290)
-'''
-output = ''
-output += '{'
-for count, i in enumerate(data_snd['e']):
-    if(count == 0):
-        output += '%f' % (i)
-    else:
-        output += ',%f' % (i)
-output += '}'
-print(output)
-'''
+length = len(data_use['x'])
+print(length)
+if(1 == 1):
+    output = ''
+    output += '{'
+    for count, i in enumerate(data_use['x']):
+        if(count == length - 1):
+            output += '%f' % (i)
+        else:
+            output += '%f,' % (i)
+        if(count % 5 == 4):
+            output += '\n'
+    output += '}'
+    print(output)
+if(1 == 1):
+    output = ''
+    output += '{'
+    for count in range(length):
+        if(count == length - 1):
+            output += '%f' % (0.0)
+        else:
+            output += '%f,' % (0.0)
+        if(count % 5 == 4):
+            output += '\n'
+    output += '}'
+    print(output)
+if(1 == 1):
+    output = ''
+    output += '{'
+    for count, i in enumerate(data_use['y']):
+        if(count == length - 1):
+            output += '%f' % (i)
+        else:
+            output += '%f,' % (i)
+        if(count % 5 == 4):
+            output += '\n'
+    output += '}'
+    print(output)
+if(1 == 1):
+    output = ''
+    output += '{'
+    for count, i in enumerate(data_use['e']):
+        if(count == length - 1):
+            output += '%f' % (i)
+        else:
+            output += '%f,' % (i)
+        if(count % 5 == 4):
+            output += '\n'
+    output += '}'
+    print(output)
+
+
 '''
 module_all = Model(hfunc.snd_line_shape, independent_vars=['e'])
 params = module_all.make_params(mr_omega1450=1.450, wr_omega1450=0.88, b1b2_omega1450=73,
@@ -42,7 +89,6 @@ y = hfunc.snd_line_shape(x,
                          result.best_values['phase_omega1450'],
                          result.best_values['phase_omega1680'],
                          result.best_values['phase_back'])
-'''
 y = hfunc.snd_line_shape(x,
                          1.27589e+00, 8.58246e-01, 3.85164e+01,
                          1.65721e+00, 2.09581e-01, 8.37485e+01,
@@ -62,3 +108,4 @@ axe.errorbar(data_snd['x'],
 plt.xlim((1.0, 2.0))
 plt.ylim((0, 8000))
 plt.show()
+'''

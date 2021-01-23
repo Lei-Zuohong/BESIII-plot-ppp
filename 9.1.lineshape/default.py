@@ -5,10 +5,12 @@ import math
 import re
 # Private package
 import headpy.hfile as hfile
+import headpy.hbes.hnew as hnew
 
 
 def data_bes_pppmpz():
-    data = hfile.pkl_read('fdata/4.section-00-01.pkl')
+    massages = hnew.massage_read()
+    data = hfile.pkl_read('%s.pkl' % (massages['section']))
     x = []
     y = []
     e = []
@@ -27,15 +29,22 @@ def data_bes_pppmpz():
 
 
 def data_bes_pppmpz_fraction(wave):
-    output = data_bes_pppmpz()
-    for count, energy in enumerate(output['x']):
-        result = hfile.pkl_read('../ppp_pwa/output_nominal/%1.4f.pkl' % (energy))
-        fraction = result.fraction[wave][wave]
-        branch = 1
-        if(re.match(r'rho770(.*)', wave)): branch = 1
-        if(re.match(r'omega782(.*)', wave)): branch = 0.0153
-        output['y'][count] = output['y'][count] * fraction / branch
-        output['e'][count] = output['e'][count] * fraction / branch
+    massages = hnew.massage_read()
+    data = hfile.pkl_read('%s_%s.pkl' % (massages['section'], wave))
+    x = []
+    y = []
+    e = []
+    energy_list = data.keys()
+    energy_list.sort()
+    for energy in energy_list:
+        if(energy in data):
+            x.append(data[energy]['Energy'])
+            y.append(data[energy]['Section'])
+            e.append(data[energy]['eSection'])
+    output = {}
+    output['x'] = numpy.array(x)
+    output['y'] = numpy.array(y)
+    output['e'] = numpy.array(e)
     return output
 
 

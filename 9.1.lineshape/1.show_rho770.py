@@ -10,17 +10,6 @@ import default as default
 ################################################################################
 
 
-def my_function(e, mr, wr, sigma, phi, a, b):
-    output = default.bar_function(e, mr, wr, sigma, phi, a, b)
-    return output
-
-
-def poly2d(e, a, b):
-    output = default.bar_none(e, a, b)
-    output = output**2
-    return output
-
-
 # 读取数据
 print('开始读取数据')
 data_bes_pppmpz = default.data_bes_pppmpz_fraction('rho770pi')
@@ -44,9 +33,10 @@ axe.errorbar(data_bes_pppmpz['x'],
 axe.legend(loc=1)
 axe.set_xlabel(r'Energy (GeV)')
 axe.set_ylabel(r'Born Cross Section (pb)')
-axe.set_title(r'Born Cross Section of $e^{+}e^{-}\rightarrow\pi^{+}\pi^{-}\pi^{0}$')
-plt.xlim((1.0, 3.2))
-plt.ylim((0, 5000))
-#plt.savefig('9.1.lineshape/1.show.pdf')
+#axe.set_title(r'Born Cross Section of $e^{+}e^{-}\rightarrow\pi^{+}\pi^{-}\pi^{0}$')
+plt.xlim((2.0, 3.2))
+plt.ylim((0, 600))
+plt.savefig('opicture/lineshape/7_show_rho770pi.pdf')
+plt.savefig('opicture/lineshape/7_show_rho770pi.png')
 plt.show()
 plt.close()

@@ -47,7 +47,7 @@ def getisr(energy, filelog):
 ######################################################
 energy_sort = hppp.energy_sort()
 massage = hnew.massage_read()
-filelog = '/besfs/groups/tauqcd/leizh/ppp/mc/sim/pppmpz-%s' % (massage['version'])
+filelog = '/besfs5/groups/tauqcd/leizh/ppp/mc/sim/pppmpz-%s' % (massage['version'])
 filepickle = '%s.pkl' % (massage['factor'])
 ######################################################
 factor = {}
