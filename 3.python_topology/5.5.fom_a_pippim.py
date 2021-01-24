@@ -35,7 +35,7 @@ def plot(energy=0,
     nameh = {}
     # endregion
     # region 数据 background部分
-    docuts = default.docuts()
+    docuts = hppp.docuts()
     new_docuts = []
     for i in docuts:
         if(i != option2):

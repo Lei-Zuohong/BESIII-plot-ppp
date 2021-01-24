@@ -4,11 +4,12 @@ import threading
 # Private package
 import default as default
 import headpy.hbes.hnew as hnew
+
 ################################################################################
 # dump常规root文件
-dump_real = 1
+dump_real = 0
 dump_pppmpz = 1
-dump_pppmpz_truth = 1
+dump_pppmpz_truth = 0
 dump_back_back = 0
 dump_pwa = 0
 dump_pwa_truth = 0

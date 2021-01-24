@@ -35,7 +35,7 @@ def plot(energy=0,
     nameh = {}
     # endregion
     # region 数据 background部分
-    docuts = default.docuts()
+    docuts = hppp.docuts()
     docuts.append('vertex')
     for i in range(3):
         index = i + 1

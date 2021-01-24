@@ -35,16 +35,6 @@ def topo_scale():
     return output
 
 
-def docuts():
-    output = ['pip_ep', 'pim_ep', 'pip_pid_pi', 'pim_pid_pi',
-              # 'vertex',
-              'chisq',
-              'a_pippim',
-              'gamma1_heli', 'gamma2_heli',
-              'piz_m']
-    return output
-
-
 def add_hist(thist, entries, name, name1, name2):
     thist[name1].Add(thist[name2])
     thist[name] = thist[name1]
