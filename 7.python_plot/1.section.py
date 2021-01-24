@@ -34,7 +34,7 @@ for energy in energy_sort:
 
     output[energy]['Lumin'] = energy_list[energy][2]
 
-    output[energy]['Effciency'] = data['eff'][energy]
+    output[energy]['Efficiency'] = data['eff'][energy]
 
     output[energy]['isr'] = data['factor'][energy]['isr']
     output[energy]['vpf'] = data['factor'][energy]['vpf']
@@ -49,7 +49,7 @@ for energy in energy_sort:
         error_total += error[i]**2
     error_total = pow(error_total, 0.5)
     # 计算数据
-    section = output[energy]['Nsignal'] / output[energy]['Lumin'] / output[energy]['Effciency'] / output[energy]['isr'] / output[energy]['vpf'] / output[energy]['Branch']
+    section = output[energy]['Nsignal'] / output[energy]['Lumin'] / output[energy]['Efficiency'] / output[energy]['isr'] / output[energy]['vpf'] / output[energy]['Branch']
     esection = section * error_total
 
     output[energy]['Section'] = section
