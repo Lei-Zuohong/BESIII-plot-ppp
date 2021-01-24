@@ -73,7 +73,7 @@ nx = numpy.arange(1.95, 3.08, 0.001)
 axe.errorbar(data['x'],
              data['y'],
              yerr=data['e'],
-             fmt='bo',
+             fmt='ro',
              label=r'Measurement')
 
 '''
@@ -95,7 +95,7 @@ ny2 = my_function(nx,
                   mi.params['p1'].value,
                   mi.params['p2'].value,
                   mi.params['p3'].value)
-axe.plot(nx, ny2, 'r-', label=r'Best fit')
+axe.plot(nx, ny2, 'b-', label=r'Best fit')
 
 ny3 = my_function_resonance(nx,
                             mi.params['mr'].value,

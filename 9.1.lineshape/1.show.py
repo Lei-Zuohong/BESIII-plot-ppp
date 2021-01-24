@@ -24,7 +24,7 @@ axe = axes
 axe.errorbar(data_babar['x'],
              data_babar['y'],
              yerr=data_babar['e'],
-             fmt='ro',
+             fmt='bo',
              label=r'BABAR')
 axe.errorbar(data_snd['x'],
              data_snd['y'],
@@ -39,7 +39,7 @@ axe.errorbar(data_beslow['x'],
 axe.errorbar(data_bes_pppmpz['x'],
              data_bes_pppmpz['y'],
              yerr=data_bes_pppmpz['e'],
-             fmt='bo',
+             fmt='ro',
              label=r'BESIII R-scan data')
 
 axe.legend(loc=1)

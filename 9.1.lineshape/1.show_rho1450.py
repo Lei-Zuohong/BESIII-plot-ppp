@@ -23,7 +23,7 @@ axe = axes
 axe.errorbar(data_bes_rho1450['x'],
              data_bes_rho1450['y'],
              yerr=data_bes_rho1450['e'],
-             fmt='bo',
+             fmt='ro',
              label=r'$\sigma$($\rho$(1450)$\pi$)')
 if(1 == 0):
     axe.errorbar(data_bes_rho770['x'],
@@ -37,7 +37,7 @@ axe.set_xlabel(r'Energy (GeV)')
 axe.set_ylabel(r'Born Cross Section (pb)')
 #axe.set_title(r'Born Cross Section')
 plt.xlim((2.0, 3.2))
-plt.ylim((0, 120))
+plt.ylim((0, 90))
 plt.savefig('opicture/lineshape/7_show_rho1450pi.pdf')
 plt.savefig('opicture/lineshape/7_show_rho1450pi.png')
 plt.show()

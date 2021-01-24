@@ -26,21 +26,14 @@ output = {}
 for energy in energy_sort:
     # 录入数据
     output[energy] = {}
-
     output[energy]['Energy'] = energy
-
     output[energy]['Nsignal'] = data['event'][energy]['nevent']
     output[energy]['eNsignal'] = data['event'][energy]['enevent']
-
     output[energy]['Lumin'] = energy_list[energy][2]
-
     output[energy]['Effciency'] = data['eff'][energy]
-
     output[energy]['isr'] = data['factor'][energy]['isr']
     output[energy]['vpf'] = data['factor'][energy]['vpf']
-
     output[energy]['Branch'] = 0.98823
-
     output[energy]['Fraction'] = hfile.pkl_read('../ppp_pwa/output_nominal/%1.4f.pkl' % (energy)).fraction['rho1450pi']['rho1450pi']
     # 录入误差
     error = {}

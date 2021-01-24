@@ -26,21 +26,14 @@ output = {}
 for energy in energy_sort:
     # 录入数据
     output[energy] = {}
-
     output[energy]['Energy'] = energy
-
     output[energy]['Nsignal'] = data['event'][energy]['nevent']
     output[energy]['eNsignal'] = data['event'][energy]['enevent']
-
     output[energy]['Lumin'] = energy_list[energy][2]
-
-    output[energy]['Effciency'] = data['eff'][energy]
-
+    output[energy]['Efficiency'] = data['eff'][energy]
     output[energy]['isr'] = data['factor'][energy]['isr']
     output[energy]['vpf'] = data['factor'][energy]['vpf']
-
     output[energy]['Branch'] = 0.98823
-
     output[energy]['Fraction'] = hfile.pkl_read('../ppp_pwa/output_nominal/%1.4f.pkl' % (energy)).fraction['rho770pi']['rho770pi']
     # 录入误差
     error = {}
@@ -52,7 +45,10 @@ for energy in energy_sort:
         error_total += error[i]**2
     error_total = pow(error_total, 0.5)
     # 计算数据
-    section = output[energy]['Nsignal'] / output[energy]['Lumin'] / output[energy]['Effciency'] / output[energy]['isr'] / output[energy]['vpf'] / output[energy]['Branch'] * output[energy]['Fraction']
+    section = output[energy]['Nsignal'] / output[energy]['Lumin'] / output[energy]['Efficiency'] / output[energy]['isr'] / output[energy]['vpf'] / output[energy]['Branch'] * output[energy]['Fraction']
+    
+    if(1 == 1):
+        pass
     esection = section * error_total
 
     output[energy]['Section'] = section
