@@ -7,17 +7,35 @@ import headpy.hfile as hfile
 import headpy.hbes.hfit as hfit
 import headpy.hbes.hnew as hnew
 import headpy.hbes.hppp as hppp
+import headpy.hmath.hstatis as hstatis
 
 
-parameters = {}
-parameters['gmean'] = default.set_parameter(0.0, 0.0, 0.001, -0.01, 0.01)
-parameters['gsigm'] = default.set_parameter(0.00001, 0.0, 0.0001, 0.0, 0.005)
-parameters['npdf1'] = default.set_parameter(500.0, 0.0, 1000.0, 0.0, 20000.0)
-parameters['npdf2'] = default.set_parameter(10.0, 0.0, 500.0, 0.0, 10000.0)
-parameters['p0'] = default.set_parameter(0.1, -1.0, 1.0, -1000.0, 1000.0)
-parameters['p1'] = default.set_parameter(0.1, -1.0, 1.0, -1000.0, 1000.0)
-parameters['p2'] = default.set_parameter(0.1, -1.0, 1.0, -1000.0, 1000.0)
-parameters['p3'] = default.set_parameter(0.1, -1.0, 1.0, -1000.0, 1000.0)
+parameter_gmean = hstatis.PARAMETER(name='gmean', value=0.0, error=1.0, limitl=-0.01, limitr=0.01)
+parameter_gmean.set_gen_range(0.0, 0.001)
+parameter_gsigm = hstatis.PARAMETER(name='gsigm', value=0.00001, error=1.0, limitl=0.0, limitr=0.005)
+parameter_gsigm.set_gen_range(0.0, 0.0001)
+parameter_npdf1 = hstatis.PARAMETER(name='npdf1', value=500.0, error=1.0, limitl=0.0, limitr=20000.0)
+parameter_npdf1.set_gen_range(0.0, 1000.0)
+parameter_npdf2 = hstatis.PARAMETER(name='npdf2', value=10.0, error=1.0, limitl=0.0, limitr=10000.0)
+parameter_npdf2.set_gen_range(0.0, 500.0)
+parameter_p0 = hstatis.PARAMETER(name='p0', value=0.1, error=1.0, limitl=-1000.0, limitr=1000.0)
+parameter_p0.set_gen_range(-1.0, 1.0)
+parameter_p1 = hstatis.PARAMETER(name='p1', value=0.1, error=1.0, limitl=-1000.0, limitr=1000.0)
+parameter_p1.set_gen_range(-1.0, 1.0)
+parameter_p2 = hstatis.PARAMETER(name='p2', value=0.1, error=1.0, limitl=-1000.0, limitr=1000.0)
+parameter_p2.set_gen_range(-1.0, 1.0)
+parameter_p3 = hstatis.PARAMETER(name='p3', value=0.1, error=1.0, limitl=-1000.0, limitr=1000.0)
+parameter_p3.set_gen_range(-1.0, 1.0)
+
+parameters = hstatis.PARAMETERS()
+parameters.add(parameter_gmean)
+parameters.add(parameter_gsigm)
+parameters.add(parameter_npdf1)
+parameters.add(parameter_npdf2)
+parameters.add(parameter_p0)
+parameters.add(parameter_p1)
+parameters.add(parameter_p2)
+parameters.add(parameter_p3)
 
 output = {}
 for energy in hppp.energy_sort():
@@ -51,6 +69,3 @@ for energy in hppp.energy_sort():
     output[energy]['nevent'] = fit_data['nevent']
     output[energy]['enevent'] = fit_data['enevent']
 print(output)
-
-massages = hnew.massage_read()
-hfile.pkl_dump('%s.pkl' % (massages['nevent']), output)

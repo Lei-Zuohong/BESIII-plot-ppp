@@ -20,12 +20,12 @@ plt.rcParams['figure.figsize'] = (9, 6)
 fig, axes = plt.subplots(1)
 axe = axes
 '''
+'''
 axe.errorbar(data_snd['x'],
              data_snd['y'],
              yerr=data_snd['e'],
              fmt='go',
              label=r'SND')
-'''
 axe.errorbar(data_bes_pppmpz['x'],
              data_bes_pppmpz['y'],
              yerr=data_bes_pppmpz['e'],
@@ -36,9 +36,9 @@ axe.legend(loc=1)
 axe.set_xlabel(r'Energy (GeV)')
 axe.set_ylabel(r'Born Cross Section (pb)')
 #axe.set_title(r'Born Cross Section of $e^{+}e^{-}\rightarrow\pi^{+}\pi^{-}\pi^{0}$')
-plt.xlim((2.0, 3.2))
+plt.xlim((1.95, 3.2))
 plt.ylim((0, 600))
-plt.savefig('opicture/lineshape/7_show_rho770pi.pdf')
-plt.savefig('opicture/lineshape/7_show_rho770pi.png')
+#plt.savefig('opicture/lineshape/7_show_rho770pi.pdf')
+#plt.savefig('opicture/lineshape/7_show_rho770pi.png')
 plt.show()
 plt.close()

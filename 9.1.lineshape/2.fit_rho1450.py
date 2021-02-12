@@ -7,6 +7,7 @@ import copy
 # Private package
 import default as default
 import headpy.hbes.hfunc as hfunc
+import headpy.hfile as hfile
 
 ################################################################################
 # 拟合并绘制BES的结果
@@ -14,24 +15,13 @@ import headpy.hbes.hfunc as hfunc
 
 
 data = default.data_bes_pppmpz_fraction('rho1450pi')
+data = default.delete_point(data, [2.5, 2.7, 2.8])
 print(len(data['x']))
 
 x = data['x']
 y = data['y']
 e = data['e']
-uy = copy.deepcopy(y)
 ue = copy.deepcopy(e)
-
-'''
-for i in range(len(x)):
-    if(x[i] == 2.125):
-        ue[i] *= 3
-'''
-for i in range(len(x)):
-    if(x[i] < 2.2 and x[i] != 2.125):
-        #uy[i] *= 0.6
-        #y[i] *= 0.6
-        ue[i] *= 2
 
 
 def my_function(e, mr, wr, b, phase,
@@ -49,12 +39,10 @@ def my_function_resonance(e, mr, wr, b, phase):
 def func(p):
     output = (my_function(x,
                           p['mr'], p['wr'], p['b'], p['phase'],
-                          p['p1'], p['p2'], p['p3']) - uy) / ue
+                          p['p1'], p['p2'], p['p3']) - y) / ue
     return output
 
 
-parameter_init = (2.13, 0.07, 10.0, 0.0,
-                  400.0, 2.9)
 p = lmfit.Parameters()
 p.add(name='mr', value=2.13, min=2.0, max=2.4)
 p.add(name='wr', value=0.07, min=0.01, max=0.5)
@@ -75,7 +63,7 @@ for name in mi.params:
 # 绘制原图
 fig, axes = plt.subplots(1, 1)
 axe = axes
-nx = numpy.arange(1.95, 3.08, 0.001)
+nx = numpy.arange(1.95, 3.10, 0.001)
 
 axe.errorbar(data['x'],
              data['y'],
@@ -117,7 +105,12 @@ axe.set_xlabel(r'Energy (GeV)')
 axe.set_ylabel(r'Born Cross Section (pb)')
 #axe.set_title(r'Cross Section by BESIII')
 plt.ylim((0, 130))
-plt.savefig('opicture/lineshape/8_fit_rho1450pi.pdf')
-plt.savefig('opicture/lineshape/8_fit_rho1450pi.png')
+#plt.savefig('opicture/lineshape/8_fit_rho1450pi.pdf')
+#plt.savefig('opicture/lineshape/8_fit_rho1450pi.png')
 plt.show()
 plt.close()
+
+output = ''
+for i in range(len(nx)):
+    output += '%.5f %.5f 0\n' % (nx[i], ny2[i])
+hfile.txt_write('9.1.lineshape/xs_user.txt', output)

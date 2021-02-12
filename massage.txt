@@ -1,25 +1,28 @@
 # 放置版本号
-version:00-03 endl
+version:00-04                                           endl
+
 
 # 放置topology
-real:../ppp_data/realr/realr-00-01 endl
-pppmpz:../ppp_data/simr/pppmpz- version
-back_back:../ppp_data/backr/backr_back endl
-
-rhopipm:../ppp_data/simr/rhopipm endl
-rhopimp:../ppp_data/simr/rhopimp endl
-rhopizz:../ppp_data/simr/rhopizz endl
-pwa:../ppp_data/simr/pwa endl
+real:../ppp_data/realr/realr-00-01                      endl
+pppmpz:../ppp_data/simr/pppmpz-                         version
+back_back:../ppp_data/backr/backr_back                  endl
 
 
 # 放置文件夹地址（需要版本号）
-weight:fdata/weight- version
+weight:fdata/weight-                                    version
+
 
 # 放置文件地址（需要版本号）
-factor:fdata/1.factor- version
-efficiency:fdata/2.efficiency- version
-nevent:fdata/3.nevent- version
-section:fdata/4.section- version
-error:fdata/5.error- version
-fake:fdata/6.fake- version
+factor:fdata/1.factor-                                  version
+factor_rho770pi:fdata/1.factor_rho770pi-                version
+factor_rho1450pi:fdata/1.factor_rho1450pi-              version
+factor_omega782pi:fdata/1.factor_omega782pi-            version
 
+efficiency:fdata/2.efficiency-                          version
+
+nevent:fdata/3.nevent-                                  version
+
+section:fdata/4.section-                                version
+section_rho770pi:fdata/4.section_rho770pi-              version
+section_rho1450pi:fdata/4.section_rho1450pi-            version
+section_omega782pi:fdata/4.section_omega782pi-          version

@@ -8,7 +8,7 @@ import headpy.hbes.hnew as hnew
 import headpy.hscreen.hprint as hprint
 
 
-def effect(energy):
+def get_efficiency(energy):
     # 读取数据
     massages = hnew.massage_read()
     trees_fit4c = hnew.trees_read(energy=energy,
@@ -82,15 +82,10 @@ def effect(energy):
 # 读取信息
 massage = hnew.massage_read()
 energy_sort = hppp.energy_sort()
-fileefficiency = '%s.pkl' % (massage['efficiency'])
+file_efficiency = '%s.pkl' % (massage['efficiency'])
 # 进行统计
 output = {}
 output_detail = {}
-for i in energy_sort:
-    output[i], output_detail[i] = effect(i)
-# 输出
-hfile.pkl_dump(fileefficiency, output)
-hfile.pkl_dump('5.python_efficiency_factor/data/nominal.pkl', output_detail)
-table = hprint.TABLE()
-table.add_dict(output_detail, key1='Energy')
-table.ptable()
+for energy in energy_sort:
+    output[energy], output_detail[energy] = get_efficiency(energy)
+hfile.pkl_dump(file_efficiency, output)
