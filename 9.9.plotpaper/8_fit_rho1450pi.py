@@ -166,4 +166,5 @@ for i in drawlist:
     i.Draw('same')
 canvas.Update()
 canvas.Print('opicture/%s' % (filename))
+canvas.Print('opicture/%s' % (filename.replace('.pdf','.jpg')))
 input()
