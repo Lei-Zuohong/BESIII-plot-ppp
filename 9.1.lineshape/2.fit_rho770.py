@@ -13,9 +13,11 @@ import headpy.hfile as hfile
 # 拟合并绘制BES的结果
 ################################################################################
 
+use_error = 0
+unuse_points = [2.5, 2.7, 2.8]
 
 data = default.data_bes_pppmpz_fraction('rho770pi')
-#data = default.delete_point(data, [2.5, 2.7, 2.8])
+data = default.delete_point(data, unuse_points)
 print(len(data['x']))
 
 x = data['x']
@@ -26,20 +28,20 @@ ue = copy.deepcopy(e)
 
 def my_function(e, mr, wr, b, phase,
                 p1, p2, p3):
-    output = hfunc.bes_line_shape_rho770pi(e, mr, wr, b, phase,
+    output = hfunc.snd_line_shape_rho770pi(e, mr, wr, b, phase,
                                            p1, p2, p3)
     return output
 
 
-def my_function_resonance(e, mr, wr, b, phase):
-    output = hfunc.bes_line_shape_rho770pi_resonance(e, mr, wr, b, phase)
-    return output
-
-
 def func(p):
-    output = (my_function(x,
-                          p['mr'], p['wr'], p['b'], p['phase'],
-                          p['p1'], p['p2'], p['p3']) - y) / 1
+    if(use_error == 1):
+        output = (my_function(x,
+                              p['mr'], p['wr'], p['b'], p['phase'],
+                              p['p1'], p['p2'], p['p3']) - y) / ue
+    else:
+        output = (my_function(x,
+                              p['mr'], p['wr'], p['b'], p['phase'],
+                              p['p1'], p['p2'], p['p3']) - y) / 1
     return output
 
 
@@ -51,14 +53,11 @@ p.add(name='phase', value=0.0, min=-20.0, max=20.0)
 p.add(name='p1', value=1000000000.0, min=0.0, max=1000000000.0)
 p.add(name='p2', value=7.09268368, min=-100.0, max=100.0)
 p.add(name='p3', value=-8.32936732, min=-100.0, max=100.0)
-
 mi = lmfit.minimize(func, params=p, method='leastsq')
 lmfit.printfuncs.report_fit(mi.params, min_correl=0.5)
 for name in mi.params:
     print(mi.params[name].value)
     print(mi.params[name].stderr)
-'''
-'''
 
 # 绘制原图
 fig, axes = plt.subplots(1, 1)
@@ -92,11 +91,14 @@ ny2 = my_function(nx,
                   mi.params['p3'].value)
 axe.plot(nx, ny2, 'b-', label=r'Best fit')
 
-ny3 = my_function_resonance(nx,
-                            mi.params['mr'].value,
-                            mi.params['wr'].value,
-                            mi.params['b'].value,
-                            mi.params['phase'].value)
+ny3 = my_function(nx,
+                  mi.params['mr'].value,
+                  mi.params['wr'].value,
+                  mi.params['b'].value,
+                  mi.params['phase'].value,
+                  0.0,
+                  mi.params['p2'].value,
+                  mi.params['p3'].value)
 axe.plot(nx, ny3, 'g-', label=r'Resonance')
 
 
@@ -105,8 +107,8 @@ axe.set_xlabel(r'Energy (GeV)')
 axe.set_ylabel(r'Born Cross Section (pb)')
 #axe.set_title(r'Cross Section by BESIII')
 plt.ylim((0, 600))
-#plt.savefig('opicture/lineshape/8_fit_rho770pi.pdf')
-#plt.savefig('opicture/lineshape/8_fit_rho770pi.png')
+# plt.savefig('opicture/lineshape/8_fit_rho770pi.pdf')
+# plt.savefig('opicture/lineshape/8_fit_rho770pi.png')
 plt.show()
 plt.close()
 

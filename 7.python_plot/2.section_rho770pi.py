@@ -10,7 +10,6 @@ import headpy.hbes.hconst as hconst
 massages = hnew.massage_read()
 filename = {}
 filename['efficiency'] = '%s.pkl' % (massages['efficiency'])
-#filename['factor'] = '%s.pkl' % (massages['factor_rho770pi'])
 filename['factor'] = 'fdata/1.factor_rho770pi-00-03.pkl'
 filename['event'] = 'fdata/3.nevent_rho770pi.pkl'
 data = {}

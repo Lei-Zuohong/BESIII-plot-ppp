@@ -16,6 +16,9 @@ opm_ratio = 2
 data_bes_pppmpz = default.data_bes_pppmpz_fraction('omega782pi')
 data_bes_pppmpz = default.delete_point(data_bes_pppmpz, [2.5, 2.7, 2.8])
 data_bes_omegapi = default.data_bes_omegapi()
+# 修改数据
+data_bes_pppmpz['y'][1] = 1089
+data_bes_pppmpz['y'][2] = 1255
 # 绘图
 hstyle.set_style()
 canvas = hstyle.get_canvas()

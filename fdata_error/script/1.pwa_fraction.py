@@ -6,6 +6,13 @@ import matplotlib.pyplot as plt
 import headpy.hfile as hfile
 import headpy.hbes.hppp as hppp
 
+################################################################################
+# 读取fraction
+# 读取fractions
+# 将fraction的中心值放入    pwa_fraction_nominal
+# 将fraction的误差放入      pwa_fraction_mean_error
+################################################################################
+
 processes = ['rho770pi', 'rho1450pi', 'omega782pi']
 multi_fraction = {}
 for energy in hppp.energy_sort():
@@ -24,4 +31,8 @@ for energy in hppp.energy_sort():
         hfile.pkl_dump('fdata_error/pwa_fraction_mean_error/%s/%1.4f.pkl' % (process, energy), {'mean': numpy.mean(multi_list),
                                                                                                 'error': numpy.std(multi_list) / numpy.mean(multi_list)})
     print(energy)
-    print(multi_fraction[energy])
+    for process in processes:
+        print('{:<12}: nominal: {:<10} multi_mean: {:<10} multi_error: {:<10}'.format(process,
+                                                                                      '%.4f' % (multi_fraction[energy][process]['nominal']),
+                                                                                      '%.4f' % (multi_fraction[energy][process]['multi_mean']),
+                                                                                      '%.4f' % (multi_fraction[energy][process]['multi_error'])))

@@ -8,7 +8,7 @@ waves = ['rho770pi', 'rho1450pi', 'rho1700pi', 'omega782pi', 'rho1690pi']
 energy_sort = hppp.energy_sort()
 
 for energy in energy_sort:
-    if(energy != 2.1250): continue
+    if(energy not in [2.125, 2.396, 2.9]): continue
     data = hfile.pkl_read('../ppp_pwa/output_nominal/%1.4f.pkl' % (energy))
     fraction = data.fraction
     print(fraction)
@@ -21,4 +21,6 @@ for energy in energy_sort:
                 output += '{:^10} &'.format('%.4f' % (fraction[i1][i2]))
             else:
                 output += '{:^10} &'.format('%.4f' % (fraction[i1][i2] + fraction[i2][i1]))
+        output = output[:-2]
+        output += '\\\\'
         print(output)

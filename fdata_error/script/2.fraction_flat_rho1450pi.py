@@ -7,6 +7,13 @@ import lmfit
 import headpy.hfile as hfile
 import headpy.hbes.hppp as hppp
 
+################################################################################
+# 读取pwa_fraction_nominal
+# 读取pwa_fraction_mean_error
+# 进行拟合
+# 存入pwa_mean_use
+################################################################################
+
 section = 'rho1450pi'
 nx = []
 ny = []

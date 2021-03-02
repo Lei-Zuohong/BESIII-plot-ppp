@@ -23,28 +23,24 @@ def dump(energy):
                             tree='fit4c',
                             read=['real', 'pppmpz'])
     selecters = hppp.selecters()
-    docuts = ['pip_ep', 'pim_ep', 'pip_pid_pi', 'pim_pid_pi',
-              'chisq',
-              'a_pippim',
-              'gamma1_heli', 'gamma2_heli',
-              'piz_m']
+    docuts = hppp.docuts()
     # endregion
     # region 筛选数据
-    tree_r = trees['real']
-    tree_m = trees['pppmpz']
+    tree_source_r = trees['real']
+    tree_source_m = trees['pppmpz']
     selecters['piz_m'].set_width(0.015)
-    tree_r = hnew.tree_cut(tree_r,
+    tree_r = hnew.tree_cut(tree_source_r,
                            selecters,
                            branchs=docuts)
-    tree_m = hnew.tree_cut(tree_m,
+    tree_m = hnew.tree_cut(tree_source_m,
                            selecters,
                            branchs=docuts)
     selecters['piz_m'].shift(-0.045)
-    tree_b1 = hnew.tree_cut(tree_r,
+    tree_b1 = hnew.tree_cut(tree_source_r,
                             selecters,
                             branchs=docuts)
     selecters['piz_m'].shift(0.045 + 0.045)
-    tree_b2 = hnew.tree_cut(tree_r,
+    tree_b2 = hnew.tree_cut(tree_source_r,
                             selecters,
                             branchs=docuts)
     # endregion

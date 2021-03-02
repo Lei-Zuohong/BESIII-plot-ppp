@@ -6,6 +6,11 @@ import headpy.hfile as hfile
 import headpy.hbes.hnew as hnew
 import headpy.hbes.hppp as hppp
 
+################################################################################
+# 读取fraction
+# 计算统计误差，放入event
+################################################################################
+
 waves = ['rho770pi', 'rho1450pi', 'omega782pi']
 massages = hnew.massage_read()
 total_event = hfile.pkl_read('%s.pkl' % (massages['nevent']))

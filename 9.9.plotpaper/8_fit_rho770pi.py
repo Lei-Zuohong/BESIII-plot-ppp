@@ -15,7 +15,7 @@ import headpy.hbes.hfunc as hfunc
 
 
 data = default.data_bes_pppmpz_fraction('rho770pi')
-#data = default.delete_point(data, [2.5, 2.7, 2.8])
+data = default.delete_point(data, [2.5, 2.7, 2.8])
 print(len(data['x']))
 
 x = data['x']
@@ -26,13 +26,8 @@ ue = copy.deepcopy(e)
 
 def my_function(e, mr, wr, b, phase,
                 p1, p2, p3):
-    output = hfunc.bes_line_shape_rho770pi(e, mr, wr, b, phase,
+    output = hfunc.snd_line_shape_rho770pi(e, mr, wr, b, phase,
                                            p1, p2, p3)
-    return output
-
-
-def my_function_resonance(e, mr, wr, b, phase):
-    output = hfunc.bes_line_shape_rho770pi_resonance(e, mr, wr, b, phase)
     return output
 
 
@@ -53,11 +48,6 @@ p.add(name='p2', value=7.09268368, min=-100.0, max=100.0)
 p.add(name='p3', value=-8.32936732, min=-100.0, max=100.0)
 mi = lmfit.minimize(func, params=p, method='leastsq')
 lmfit.printfuncs.report_fit(mi.params, min_correl=0.5)
-'''
-for name in mi.params:
-    print(mi.params[name].value)
-    print(mi.params[name].stderr)
-'''
 
 # 设定参数
 filename = 'lineshape/8_fit_rho770pi.pdf'
@@ -118,11 +108,14 @@ if(1 == 1):
     ny = numpy.arange(xlim[0], xlim[1], steps)
     len_fit_opp_r = int((xlim[1] - xlim[0]) / steps)
     for i in range(len_fit_opp_r):
-        ny[i] = my_function_resonance(nx[i],
-                                      mi.params['mr'].value,
-                                      mi.params['wr'].value,
-                                      mi.params['b'].value,
-                                      mi.params['phase'].value)
+        ny[i] = my_function(nx[i],
+                            mi.params['mr'].value,
+                            mi.params['wr'].value,
+                            mi.params['b'].value,
+                            mi.params['phase'].value,
+                            0.0,
+                            mi.params['p2'].value,
+                            mi.params['p3'].value)
     data_fit_opp_r['x'] = nx
     data_fit_opp_r['y'] = ny
     tgraph_fit_opp_r = ROOT.TGraph(len_fit_opp_r)
@@ -166,4 +159,5 @@ for i in drawlist:
     i.Draw('same')
 canvas.Update()
 canvas.Print('opicture/%s' % (filename))
+canvas.Print('opicture/%s' % (filename.replace('.pdf', '.jpg')))
 input()

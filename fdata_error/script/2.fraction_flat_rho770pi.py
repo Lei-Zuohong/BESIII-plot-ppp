@@ -7,18 +7,30 @@ import lmfit
 import headpy.hfile as hfile
 import headpy.hbes.hppp as hppp
 
-section = 'omega782pi'
+################################################################################
+# 读取pwa_fraction_nominal
+# 读取pwa_fraction_mean_error
+# 进行拟合
+# 存入pwa_mean_use
+################################################################################
+
+section = 'rho770pi'
 nx = []
 ny = []
 ne = []
+nn = []
 for energy in hppp.energy_sort():
     nx.append(energy)
-    ny.append(1 / hfile.pkl_read('fdata_error/sta_efficiency_mean/%s/%1.4f.pkl' % (section, energy)))
-    ne.append(hfile.pkl_read('fdata_error/sta_efficiency_error/%s/%1.4f.pkl' % (section, energy)))
+    multi_data = hfile.pkl_read('fdata_error/pwa_fraction_mean_error/%s/%1.4f.pkl' % (section, energy))
+    nomin_data = hfile.pkl_read('fdata_error/pwa_fraction_nominal/%s/%1.4f.pkl' % (section, energy))
+    ny.append(multi_data['mean'])
+    ne.append(multi_data['error'])
+    nn.append(nomin_data)
 nx = numpy.array(nx)
 ny = numpy.array(ny)
 ne = numpy.array(ne)
 ne = ne * ny
+nn = numpy.array(nn)
 
 
 def func_5(e, p0, p1, p2, p3, p4):
@@ -39,7 +51,9 @@ plt.rcParams['figure.figsize'] = (9, 6)
 fig, axes = plt.subplots(1)
 axe = axes
 axe.errorbar(nx, ny, yerr=ne,
-             fmt='bo', label='origin')
+             fmt='bo', label='Multi')
+axe.errorbar(nx, nn,
+             fmt='yo', label='Nominal')
 
 
 if(1 == 1):
@@ -57,20 +71,19 @@ if(1 == 1):
                 result.params['p2'].value,
                 result.params['p3'].value,
                 result.params['p4'].value)
-    axe.plot(fx, fy, 'g-')
+    axe.plot(fx, fy, 'g-', label='Fitting')
     if(1 == 1):
         new_y = func_5(nx, result.params['p0'].value,
                        result.params['p1'].value,
                        result.params['p2'].value,
                        result.params['p3'].value,
                        result.params['p4'].value)
-        print(ne / ny)
         new_y = (new_y - ny) * (ne / ny) + ny
-        axe.errorbar(nx, new_y, yerr=ne,
-                     fmt='ro', label='flated')
+        axe.errorbar(nx, new_y,
+                     fmt='ro', label='Flated')
         if(1 == 1):
             for count, energy in enumerate(hppp.energy_sort()):
-                hfile.pkl_dump('fdata_error/sta_efficiency_mean_use/%s/%1.4f.pkl' % (section, energy), 1 / new_y[count])
+                hfile.pkl_dump('fdata_error/pwa_fraction_mean_use/%s/%1.4f.pkl' % (section, energy), (nn[count] + ny[count]) / 2)
 
 axe.legend(loc='best')
 plt.show()
